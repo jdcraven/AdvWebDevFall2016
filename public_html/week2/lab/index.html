@@ -78,6 +78,34 @@
             </article>
         </section>
                     
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="script.js">
+            'use strict'            
+            
+            function displayList(selector, list, url) {
+                
+                console.log(url);
+                console.log('called');
+                var xmlhttp = new XMLHttpRequest();               
+                xmlhttp.addEventListener('load', reqListener.bind(xmlhttp, 'load'));
+                xmlhttp.addEventListener('error', reqListener.bind(xmlhttp, 'error'));
+                xmlhttp.open('GET', url);
+                xmlhttp.send();
+                
+            var dom = document.querySelector(selector);
+            var docfrag = document.createDocumentFragment();    
+                
+                list.forEach(function(value){
+                        var li = document.createElement("li");
+                        li.textContent = value.userId;
+                        
+                        docfrag.appendChild(li);
+                });
+                dom.appendChild(docfrag);
+            };
+           
+            
+            window.addEventListener('load', displayList.bind(null,'ul.users' ,'../data/users.json'))
+            
+        </script>
     </body>
 </html>
